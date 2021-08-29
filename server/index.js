@@ -16,9 +16,16 @@ const io = new Server(server, {
 })
 
 io.on("connection", (socket) => {
-    console.log(socket.id)
+    // console.log(`User connected ${socket.id}`)
 
-    io.on("disconnect", () => console.log(`This socketIs: ${socket.id} user is diconnected!`))
+    socket.on("join_room", (room_id) => {
+        socket.join(room_id)
+        console.log("get room id from frontend "+room_id)
+    })
+
+    socket.on("disconnect", () => {
+        console.log(`This socketId: ${socket.id} user is diconnected!`)
+    })
 })
 
 let port = 8080 || process.env.PORT
