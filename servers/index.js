@@ -1,4 +1,3 @@
-// console.log("Welcome to Sockets programming")
 const express = require("express")
 const app = express();
 const cors = require("cors")
