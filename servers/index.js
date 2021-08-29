@@ -23,4 +23,4 @@ io.on("connection", (socket) => {
 })
 
 let port = 8080 || process.env.PORT
-server.listen(port, () => console.log(`Server is running on http://localhost:${port}`))
+server.listen(port, () => console.log(`🚀 Server is running on http://localhost:${port}`))
