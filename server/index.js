@@ -23,6 +23,10 @@ io.on("connection", (socket) => {
         console.log("get room id from frontend "+room_id)
     })
 
+    socket.on("send_message", (data) => {
+        console.log(data)
+    })
+
     socket.on("disconnect", () => {
         console.log(`This socketId: ${socket.id} user is diconnected!`)
     })
