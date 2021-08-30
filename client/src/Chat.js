@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 function Chat({ socket, username, roomId }) {
     const [currentMessage, setCurrentMessage] = useState("")
@@ -15,8 +15,14 @@ function Chat({ socket, username, roomId }) {
         }
     }
 
+    useEffect(() => {
+        socket.on("receive_message", (data) => {
+            console.log(data)
+        })
+    }, [socket])
+
     return (
-        <div>
+        <div className="chat-window">
             <div className="chat-header">
                 <p>Chat Now</p>
             </div>
