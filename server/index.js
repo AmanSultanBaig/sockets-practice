@@ -20,11 +20,11 @@ io.on("connection", (socket) => {
 
     socket.on("join_room", (room_id) => {
         socket.join(room_id)
-        console.log("get room id from frontend "+room_id)
+        console.log("get room id from frontend " + room_id)
     })
 
     socket.on("send_message", (data) => {
-        console.log(data)
+        socket.to(data.room).emit("receive_message", data)
     })
 
     socket.on("disconnect", () => {
@@ -32,5 +32,5 @@ io.on("connection", (socket) => {
     })
 })
 
-let port = 8080 || process.env.PORT
+let port = 8000 || process.env.PORT
 server.listen(port, () => console.log(`🚀 Server is running on http://localhost:${port}`))
