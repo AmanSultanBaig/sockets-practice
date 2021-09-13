@@ -10,6 +10,7 @@ const stripe = require('stripe')(process.env.SECRET_KEY)
 
 const { Server } = require("socket.io")
 
+app.use(express.json())
 app.use(cors());
 
 const server = _http.createServer(app);
@@ -22,6 +23,7 @@ const io = new Server(server, {
 
 app.post("/payment", (req, res) => {
     const { payment, token } = req.body;
+    console.log(req.body)
     const id = uuid()
     return stripe.customers.create({
         email: token.email,

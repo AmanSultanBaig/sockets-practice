@@ -11,8 +11,8 @@ function Stripe() {
     const makePayment = token => {
         const body = { token, stuff }
         axios.post('http://localhost:8000/payment', body).then(result => {
-            console(result.data)
-        }).catch(e => alert(e.response.data.message))
+            alert(result.data.message)
+        }).catch(e => console.log("error ", e))
     }
 
     return (
