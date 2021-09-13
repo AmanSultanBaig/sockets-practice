@@ -3,8 +3,10 @@ const app = express();
 const cors = require("cors")
 const _http = require("http")
 
+require('dotenv').config()
+
 const { uuid } = require('uuidv4');
-const stripe = require('stripe')(process.env.PUBLIC_KEY)
+const stripe = require('stripe')(process.env.SECRET_KEY)
 
 const { Server } = require("socket.io")
 
@@ -25,13 +27,13 @@ app.post("/payment", (req, res) => {
         email: token.email,
         source: token.id
     }).then(customer => {
-        stripe.charges.create({ 
-            amount: payment * 100, 
-            currency: "PKR", 
-            customer: customer.id, 
+        stripe.charges.create({
+            amount: payment * 100,
+            currency: "PKR",
+            customer: customer.id,
             receipt_email: token.email,
             description: `Payment subscription for chat perimum feature`
-         }, id)
+        }, id)
     }).then(result => {
         res.status(200).json({
             message: "Payment Succeed",

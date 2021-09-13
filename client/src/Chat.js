@@ -14,6 +14,7 @@ function Chat({ socket, username, roomId }) {
             }
             await socket.emit("send_message", message)
             setMessageList((list) => [...list, message])
+            setCurrentMessage("")
         }
     }
 
