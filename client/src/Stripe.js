@@ -10,8 +10,8 @@ function Stripe() {
 
     const makePayment = token => {
         const body = { token, stuff }
-        axios.get('http:localhost:8000/payment', body).then(result => {
-            alert(result.data)
+        axios.post('http://localhost:8000/payment', body).then(result => {
+            console(result.data)
         }).catch(e => alert(e.response.data.message))
     }
 
@@ -19,7 +19,7 @@ function Stripe() {
         <div>
             <StripeCheckout
                 stripeKey={process.env.REACT_APP_PUBLIC_KEY}
-                name={stuff.name}
+                name="Chat Premium Package"
                 token={makePayment}
                 amount={stuff.price * 100}>
                 <button onClick={() => console.log("something.")} style={{ cursor: 'pointer', background: 'transprant', padding: '1rem', border: 'none' }}>Get Preimum Plan</button>
