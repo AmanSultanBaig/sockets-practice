@@ -3,6 +3,9 @@ const app = express();
 const cors = require("cors")
 const _http = require("http")
 
+const { uuid } = require('uuidv4');
+const stripe = require('stripe')(process.env.PUBLIC_KEY)
+
 const { Server } = require("socket.io")
 
 app.use(cors());
@@ -15,8 +18,32 @@ const io = new Server(server, {
     }
 })
 
+app.post("/payment", (req, res) => {
+    const { payment, token } = req.body;
+    const id = uuid()
+    return stripe.customers.create({
+        email: token.email,
+        source: token.id
+    }).then(customer => {
+        stripe.charges.create({ 
+            amount: payment * 100, 
+            currency: "PKR", 
+            customer: customer.id, 
+            receipt_email: token.email,
+            description: `Payment subscription for chat perimum feature`
+         }, id)
+    }).then(result => {
+        res.status(200).json({
+            message: "Payment Succeed",
+            data: result
+        })
+    })
+        .catch(e => console.log(e))
+
+})
+
 io.on("connection", (socket) => {
-    // console.log(`User connected ${socket.id}`)
+    console.log(`User connected ${socket.id}`)
 
     socket.on("join_room", (room_id) => {
         socket.join(room_id)
